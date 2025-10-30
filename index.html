@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Modern LifeOS – Work Dashboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+/* --- Global background shapes (from Modern LifeOS) --- */
+body {
+  font-family: 'Inter', sans-serif;
+  background: #000;
+  color: #fff;
+  overflow-x: hidden;
+}
+#sidebar {transition: transform .3s ease-in-out; transform: translateX(-100%);}
+.sidebar-visible {transform: translateX(0);}
+.app-view {display: none;}
+.app-view.active {display: block;}
+.shape {
+  position: absolute; border-radius: 50%; opacity: .1; filter: blur(50px);
+  animation: move 20s infinite alternate ease-in-out;
+}
+.shape-1{top:10%;left:5%;width:200px;height:200px;background:#f97316;}
+.shape-2{bottom:20%;right:15%;width:300px;height:300px;background:#0ea5e9;}
+.shape-3{top:50%;left:40%;width:150px;height:150px;background:#10b981;}
+.shape-4{bottom:5%;left:30%;width:250px;height:250px;background:#d946ef;}
+@keyframes move{
+  0%{transform:translate(0,0)scale(1);}
+  50%{transform:translate(150px,-75px)scale(1.1)rotate(10deg);}
+  100%{transform:translate(-50px,100px)scale(0.9);}
+}
+/* --- Simple news box style --- */
+#news-box {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  background: #0b74de;
+  color: white;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+  z-index: 60;
+}
+</style>
+</head>
+<body class="min-h-screen">
+
+<!-- Background floating shapes -->
+<div id="bg-shapes">
+  <div class="shape shape-1"></div>
+  <div class="shape shape-2"></div>
+  <div class="shape shape-3"></div>
+  <div class="shape shape-4"></div>
+</div>
+
+<!-- Sidebar -->
+<aside id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-gray-900 border-r border-gray-700 p-6 pt-20 z-50">
+  <h2 class="text-xl font-bold text-blue-400 mb-8">Navigation</h2>
+  <nav class="space-y-4">
+    <button data-view="work" class="nav-btn flex items-center w-full p-3 rounded hover:bg-gray-800"><i data-lucide="briefcase" class="w-6 h-6 mr-3"></i>Work</button>
+    <button data-view="home" class="nav-btn flex items-center w-full p-3 rounded hover:bg-gray-800"><i data-lucide="home" class="w-6 h-6 mr-3"></i>Home</button>
+    <button data-view="casual" class="nav-btn flex items-center w-full p-3 rounded hover:bg-gray-800"><i data-lucide="notebook-text" class="w-6 h-6 mr-3"></i>Casual</button>
+    <button data-view="ai" class="nav-btn flex items-center w-full p-3 rounded hover:bg-gray-800"><i data-lucide="bot" class="w-6 h-6 mr-3"></i>AI Assistant</button>
+  </nav>
+</aside>
+
+<!-- Header -->
+<header class="flex items-center justify-between bg-gray-900/80 backdrop-blur border-b border-gray-700 p-4 sticky top-0 z-40">
+  <button id="menu-btn"><i data-lucide="menu" class="w-8 h-8"></i></button>
+  <h1 class="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">Modern LifeOS</h1>
+  <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center font-bold">U</div>
+</header>
+
+<!-- Content -->
+<main id="main" class="p-6">
+
+  <!-- WORK -->
+  <section id="work" class="app-view active">
+    <h2 class="text-3xl mb-6 text-blue-400 font-bold">Work Dashboard</h2>
+
+    <!-- === Original 4 stacked rectangles === -->
+    <div class="flex flex-col space-y-4 max-w-2xl mx-auto">
+      <div class="bg-gray-800 rounded-lg p-6 shadow-lg border-l-4 border-blue-500 hover:bg-gray-700 transition">
+        <h3 class="text-xl font-semibold mb-2 flex items-center"><i data-lucide="mail" class="w-5 h-5 mr-2"></i>Email</h3>
+        <p class="text-gray-300">Receive and send emails.</p>
+      </div>
+
+      <div class="bg-gray-800 rounded-lg p-6 shadow-lg border-l-4 border-indigo-500 hover:bg-gray-700 transition">
+        <h3 class="text-xl font-semibold mb-2 flex items-center"><i data-lucide="kanban" class="w-5 h-5 mr-2"></i>Projects</h3>
+        <p class="text-gray-300">See or change the progress on a project.</p>
+      </div>
+
+      <div class="bg-gray-800 rounded-lg p-6 shadow-lg border-l-4 border-green-500 hover:bg-gray-700 transition">
+        <h3 class="text-xl font-semibold mb-2 flex items-center"><i data-lucide="send-to-back" class="w-5 h-5 mr-2"></i>Requests</h3>
+        <p class="text-gray-300">Report an issue or a problem.</p>
+      </div>
+
+      <div class="bg-gray-800 rounded-lg p-6 shadow-lg border-l-4 border-pink-500 hover:bg-gray-700 transition">
+        <h3 class="text-xl font-semibold mb-2 flex items-center"><i data-lucide="users" class="w-5 h-5 mr-2"></i>Contacts</h3>
+        <p class="text-gray-300">Manage and reach contacts.</p>
+      </div>
+    </div>
+    <!-- === End of 4 boxes === -->
+  </section>
+
+  <!-- HOME -->
+  <section id="home" class="app-view">
+    <h2 class="text-3xl mb-6 text-green-400 font-bold">Home Assistant</h2>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="card border-red-500"><i data-lucide="chef-hat"></i><h3>Recipes</h3></div>
+      <div class="card border-yellow-500"><i data-lucide="milk-off"></i><h3>Groceries</h3></div>
+      <div class="card border-teal-500"><i data-lucide="clean-hands"></i><h3>Cleaning</h3></div>
+      <div class="card border-indigo-500"><i data-lucide="calendar-clock"></i><h3>Reminders</h3></div>
+    </div>
+    <div id="home-ai-tip" class="mt-8 text-gray-300 italic">AI analyzing your home tasks...</div>
+  </section>
+
+  <!-- CASUAL -->
+  <section id="casual" class="app-view">
+    <h2 class="text-3xl mb-6 text-yellow-400 font-bold">Casual Space</h2>
+    <textarea id="casual-text" class="w-full h-60 bg-gray-800 p-4 rounded-lg border border-gray-700 focus:outline-none"></textarea>
+    <button id="save-casual" class="mt-4 bg-blue-600 px-4 py-2 rounded hover:bg-blue-700">Save</button>
+    <div id="casual-status" class="mt-2 text-sm text-gray-400"></div>
+  </section>
+
+  <!-- AI ASSISTANT -->
+  <section id="ai" class="app-view">
+    <h2 class="text-3xl mb-6 text-indigo-400 font-bold">AI Assistant</h2>
+    <div id="chat" class="bg-gray-800 rounded-lg p-4 h-[60vh] overflow-y-auto"></div>
+    <div class="flex mt-4">
+      <input id="chat-input" type="text" class="flex-grow bg-gray-900 p-3 rounded-l-lg focus:outline-none" placeholder="Ask me anything...">
+      <button id="send-btn" class="bg-blue-600 px-4 rounded-r-lg hover:bg-blue-700"><i data-lucide="send"></i></button>
+    </div>
+  </section>
+
+</main>
+
+<!-- Floating News box -->
+<div id="news-box">News</div>
+
+<script>
+/* --- Sidebar Navigation --- */
+const sidebar=document.getElementById('sidebar');
+document.getElementById('menu-btn').onclick=()=>sidebar.classList.toggle('sidebar-visible');
+document.querySelectorAll('.nav-btn').forEach(btn=>btn.onclick=()=>{
+  document.querySelectorAll('.app-view').forEach(v=>v.classList.remove('active'));
+  document.getElementById(btn.dataset.view).classList.add('active');
+  sidebar.classList.remove('sidebar-visible');
+  lucide.createIcons();
+});
+
+/* --- Card Styling (for HOME) --- */
+document.querySelectorAll('.card').forEach(c=>{
+  c.classList.add('relative','bg-gray-800','p-6','rounded-xl','shadow-xl','border-l-4','hover:bg-gray-700','cursor-pointer','transition');
+});
+
+/* --- Casual Page Save --- */
+document.getElementById('save-casual').onclick=()=>{
+  const txt=document.getElementById('casual-text').value.trim();
+  const status=document.getElementById('casual-status');
+  localStorage.setItem('casualContent',txt);
+  status.textContent='Saved!';
+  setTimeout(()=>status.textContent='',2000);
+};
+document.getElementById('casual-text').value=localStorage.getItem('casualContent')||'';;
+
+/* --- AI Assistant --- */
+const chat=document.getElementById('chat');
+const input=document.getElementById('chat-input');
+const sendBtn=document.getElementById('send-btn');
+sendBtn.onclick=()=>{
+  const msg=input.value.trim(); if(!msg)return;
+  append('user',msg);
+  input.value='';
+  setTimeout(()=>append('ai','🤖 Local AI: Sorry, this is a placeholder reply. Integrate your model here.'),1000);
+};
+function append(role,text){
+  const div=document.createElement('div');
+  div.className='mb-3 '+(role==='user'?'text-right':'text-left');
+  div.innerHTML=`<div class="inline-block px-4 py-2 rounded-lg ${role==='user'?'bg-blue-600':'bg-gray-700'}">${text}</div>`;
+  chat.appendChild(div);
+  chat.scrollTop=chat.scrollHeight;
+}
+
+/* --- News box behavior --- */
+document.getElementById('news-box').addEventListener('click',()=>{
+  alert('News panel coming soon!');
+});
+
+/* --- Initialize Icons --- */
+lucide.createIcons();
+</script>
+</body>
+</html>
